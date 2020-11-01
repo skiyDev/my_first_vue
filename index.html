@@ -10,6 +10,9 @@
         <p v-bind:title="message">
           {{text}}
         </p>
+        <p>
+          {{reversedText}}
+        </p>
         <button v-on:click="reverceMessage">Reverse Message</button>
         <input v-model="text">
       </div>
@@ -19,22 +22,33 @@
         </span>
       </div>
       <div>
-        <ol>
-          <li v-for="todo in todos">
-            {{todo.text}}
-          </li>
-        </ol>
+        <ul>
+          <todo-item v-for="item in todos"
+          v-bind:todo="item"
+          v-bind:key="item.id">
+          </todo-teim>
+        </ul>
       </div>
     </div>
 
     <script>
+      Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{todo.text}}</li>'
+      })
+
       var app = new Vue({
         el: "#app",
         data: {
           text: "simple text",
           message: "Hello Vue!",
           seen: true,
-          todos: [ {text : "1"}, {text: "2"}]
+          todos: [ {id: 1, text : "text 1"}, {id: 2, text: "text 2"}]
+        },
+        computed: {
+          reversedText: function() {
+            return this.text.split('').reverse().join('')
+          }
         },
         methods: {
           reverceMessage: function() {
