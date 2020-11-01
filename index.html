@@ -1,21 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>My first Vue app</title>
-  <script src="https://unpkg.com/vue"></script>
-</head>
-<body>
-  <div id="app">
-    {{ message }}
-  </div>
+  <head>
+    <title>My first Vue app</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <p v-bind:title="message">
+          {{text}}
+        </p>
+        <button v-on:click="reverceMessage">Reverse Message</button>
+        <input v-model="text">
+      </div>
+      <div>
+        <span v-if="seen">
+          I see you)
+        </span>
+      </div>
+      <div>
+        <ol>
+          <li v-for="todo in todos">
+            {{todo.text}}
+          </li>
+        </ol>
+      </div>
+    </div>
 
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Hello Vue!'
-      }
-    })
-  </script>
-</body>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          text: "simple text",
+          message: "Hello Vue!",
+          seen: true,
+          todos: [ {text : "1"}, {text: "2"}]
+        },
+        methods: {
+          reverceMessage: function() {
+            this.message = this.message.split('').reverse().join('')
+          }
+        }
+      });
+    </script>
+  </body>
 </html>
